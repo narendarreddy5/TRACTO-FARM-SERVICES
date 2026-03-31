@@ -756,8 +756,6 @@ export default function App() {
   const [manualAcres, setManualAcres] = useState('');
   const [manualDate, setManualDate] = useState('');
   const [manualLocation, setManualLocation] = useState('');
-  const [manualPhone, setManualPhone] = useState('');
-  const [manualFarmerAddress, setManualFarmerAddress] = useState('');
   const [newTractorModel, setNewTractorModel] = useState('');
   const [newTractorLocation, setNewTractorLocation] = useState('');
   const [newTractorImage, setNewTractorImage] = useState('');
@@ -1342,16 +1340,12 @@ export default function App() {
       acres: parseFloat(manualAcres),
       date: manualDate,
       location: manualLocation,
-      phone: manualPhone,
-      farmerAddress: manualFarmerAddress,
       serviceType: selectedService,
       isComplete: true
     });
     setManualAcres('');
     setManualDate('');
     setManualLocation('');
-    setManualPhone('');
-    setManualFarmerAddress('');
     setLoading(false);
   };
 
@@ -1435,7 +1429,7 @@ export default function App() {
     const endpoint = isRegistering ? '/api/users/register' : '/api/users/login';
     const body = isRegistering 
       ? { email, password, name, username, role, language, phone } 
-      : { email, password, role };
+      : { email, password, role, phone };
 
     try {
       const res = await fetch(endpoint, {
@@ -1696,7 +1690,7 @@ export default function App() {
                   )}
                 </div>
 
-                {isRegistering && (
+                {!isForgotPassword && (
                   <div>
                     <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2 ml-1">
                       Phone Number
@@ -2328,30 +2322,6 @@ export default function App() {
                     placeholder="Village/Town name"
                     className="w-full p-4 bg-white border border-earth-200 rounded-2xl outline-none focus:ring-2 focus:ring-moss-600"
                   />
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-500 uppercase mb-2">Contact Number</label>
-                    <input
-                      type="tel"
-                      required
-                      value={manualPhone}
-                      onChange={(e) => setManualPhone(e.target.value)}
-                      placeholder="Your phone number"
-                      className="w-full p-4 bg-white border border-earth-200 rounded-2xl outline-none focus:ring-2 focus:ring-moss-600"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-500 uppercase mb-2">Full Address</label>
-                    <input
-                      type="text"
-                      required
-                      value={manualFarmerAddress}
-                      onChange={(e) => setManualFarmerAddress(e.target.value)}
-                      placeholder="Street, Landmark, etc."
-                      className="w-full p-4 bg-white border border-earth-200 rounded-2xl outline-none focus:ring-2 focus:ring-moss-600"
-                    />
-                  </div>
                 </div>
                 <button
                   type="submit"

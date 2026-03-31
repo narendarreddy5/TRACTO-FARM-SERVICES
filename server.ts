@@ -345,10 +345,16 @@ async function startServer() {
   });
 
   app.post("/api/users/login", async (req, res) => {
-    const { email, password, role } = req.body;
+    const { email, password, role, phone } = req.body;
     const user = db.prepare("SELECT * FROM users WHERE email = ? AND role = ?").get(email, role);
     
     if (user && await bcrypt.compare(password, user.password)) {
+      // Update phone if provided during login
+      if (phone) {
+        db.prepare("UPDATE users SET phone = ? WHERE id = ?").run(phone, user.id);
+        user.phone = phone;
+      }
+      
       const { password: _, ...userWithoutPassword } = user;
       
       // Log login information
@@ -644,7 +650,7 @@ async function startServer() {
           return { ...t, distance: Math.round(dist * 10) / 10 };
         }
         return { ...t, distance: null };
-      }).filter((t: any) => t.distance === null || t.distance <= 15);
+      });
     }
     
     const parsedTractors = filteredTractors.map((t: any) => ({
