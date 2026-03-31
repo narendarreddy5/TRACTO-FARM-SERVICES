@@ -1,0 +1,5 @@
+{
+  "name": "TRACTO FARM SERVICES",
+  "description": "TRACTO FARM SERVICES: Smart Agricultural Service Booking & IVR-Based Machinery Access System. A centralized platform for farmers and service providers with AI-powered voice support.",
+  "requestFramePermissions": ["camera", "microphone", "geolocation"]
+}
